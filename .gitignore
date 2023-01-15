@@ -1,0 +1,7 @@
+.idea
+
+node_modules
+
+wechat-assistant.memory-card.json
+
+.env.local
