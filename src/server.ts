@@ -1,5 +1,8 @@
 import express from 'express';
 import {bot} from "./main.js";
+import {findTokenIsExist, getAuthById} from "./orm.js";
+import * as string_decoder from "string_decoder";
+
 
 const server = express()
 server.use(express.json())
@@ -14,10 +17,23 @@ server.route('/')
 server.route('/webhook')
   .post((req, res) => {
     const data = req.body
-    let message = `${data.title}\n${data.context}\n${data.date}`
+    let message = JSON.parse(data)
     bot.sendMessageToGroup("WeChat-Bot", message)
-    // using wechaty send message to wechat group
-    // bot.sendMessageToGroup("测试群", message)
+  });
+
+server.route('/uptimekuma')
+  .post(async (req, res) => {
+    const data = req.body
+    // 获取header的token
+    const token = req.headers['x-token'] as string
+    // 获取数据库中的token
+    const result = await findTokenIsExist(token);
+    if (!result) {
+      res.send('token is not exist')
+      return
+    }
+    let message = `${data.heartbeat}\n${data.monitor}\n${data.msg}`
+    bot.sendMessageToGroup("WeChat-Bot", message)
   });
 
 export class Server {

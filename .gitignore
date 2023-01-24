@@ -4,4 +4,10 @@ node_modules
 
 wechat-assistant.memory-card.json
 
+.env
 .env.local
+
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations
+

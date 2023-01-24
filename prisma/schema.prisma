@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Group {
+  id        Int      @id @default(autoincrement())
+  name      String
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  name  String
+  wechat_id String
+  position String
+}
+
+model Config {
+  id    Int     @id @default(autoincrement())
+  key   String
+  value String
+  remark String
+}
+
+model Auth {
+  id    Int     @id @default(autoincrement())
+  name  String
+  token   String
+}
